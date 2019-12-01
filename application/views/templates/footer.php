@@ -1,0 +1,45 @@
+<!--Footer-->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">MelodyNet</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button> 
+
+<!-- <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+    </ul>
+  </div>  -->
+
+
+<p class="font-weight-normal text-white">© 2019 MelodyNet. All Rights Reserved</p>
+</nav> 
+
+<!-- <head>
+  <style>
+    footer {
+      clear: both;
+      position: relative;
+      height: 200px;
+      margin-top: -1000px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <footer class="footer"></footer> -->
+
+</body>
+</html>
