@@ -5,7 +5,7 @@ class Posts_Controller extends CI_Controller
 
     public function __construct()
     {
-	parent::__construct();
+        parent::__construct();
         $this->load->model('User_Model');
         $this->load->model('Post_Model');
     }
@@ -43,7 +43,7 @@ class Posts_Controller extends CI_Controller
             } else {
                 $data = array('upload_data' => $this->upload->data());
                 //Get the uploaded post image 
-                $post_image = $_FILES['userfile']['name'];  
+                $post_image = $_FILES['userfile']['name'];
             }
 
             //Turn sections of the post that are hyperlinks (i.e., of the form “http://…..” should be turned into clickable hyperlinks).
@@ -51,7 +51,7 @@ class Posts_Controller extends CI_Controller
 
             //Get the currently logged in user 
             $user_details = $this->User_Model->getSelectedUser($_SESSION['current_user']['username']);
-           
+
             //Create the new post
             $result = $this->Post_Model->addPost($user_details[0]->user_id, $user_details[0]->name, $post_image, $post_content);
 
@@ -83,8 +83,32 @@ class Posts_Controller extends CI_Controller
             //If the user has been logged in then load the post 
             $this->load->view('pages/view_post', $data);
     }
- 
-     
+
+
+    // Delete an existing post
+    public function deletePost($post_id = NULL)
+    {
+
+        //If the user has been logged out then load the login page
+        if (!($this->session->userdata('current_user')))
+            $this->load->view('pages/login');
+        else {
+
+            $result =    $this->Post_Model->deletePost($post_id);
+
+            if ($result) {
+                log_message('info', 'Post deleted successfully');
+                $this->session->set_flashdata('success_message', 'Your post has been deleted successfully');
+            } else {
+                log_message('error', 'Failed to delete post');
+                $this->session->set_flashdata('error_message', 'Failed to delete post');
+            }
+
+            redirect('/user/home');
+        }
+    }
+
+
     //Turning hyperlinks into clickable links and image links into displayable images
     public function handleSpecialUrls($post_content)
     {
@@ -101,7 +125,4 @@ class Posts_Controller extends CI_Controller
         $post_content = preg_replace($regex_for_links, "<a href='\\0'>\\0</a>", $post_content);
         return $post_content;
     }
-
 }
-
-?>

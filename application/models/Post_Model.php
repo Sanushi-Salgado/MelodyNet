@@ -25,6 +25,13 @@ class Post_Model extends CI_Model
     }
 
 
+    // Delete a post
+    public function deletePost($post_id)
+    {
+       return $this->db->delete('post', array('post_id' => $post_id));
+    }
+
+
     // Get all posts of a particular user & from following people in descending date/time order
     public function getPosts($id_array)
     {
@@ -45,6 +52,7 @@ class Post_Model extends CI_Model
         $query = $this->db->get_where('post', array('post_id' => $post_id));
         return $query->result();
     }
+
 
 }
 
