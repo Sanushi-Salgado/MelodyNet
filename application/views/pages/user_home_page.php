@@ -128,7 +128,7 @@
                                     <div class="dropdown float-right  pr-5 pt-3">
                                         <span class="text-muted fa fa-ellipsis-h"></span>
                                         <div class="dropdown-content">
-                                            <small><a class="text-muted" href="#"><span class="fa fa-pencil"> Edit post</a></small>
+                                            <small><a class="text-muted" href="<?php echo base_url(). 'index.php/posts/edit/' . $post->post_id; ?>"><span class="fa fa-pencil"> Edit post</a></small>
                                             <small><a class="text-muted" href="<?php echo base_url(). 'index.php/posts/delete/' . $post->post_id; ?>"> <span class="fa fa-trash"> Delete post</a></small>
                                         </div>
                                     </div>

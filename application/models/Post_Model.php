@@ -25,6 +25,17 @@ class Post_Model extends CI_Model
     }
 
 
+    // Edit a post
+    public function editPost($post_id, $post_content, $post_image)
+    {
+        $this->db->set('created_date', time());
+        $this->db->set('content', $post_content);
+        $this->db->set('image', $post_image);
+        $this->db->where('post_id', $post_id);
+        return $this->db->update('post');
+    }
+
+
     // Delete a post
     public function deletePost($post_id)
     {
@@ -55,5 +66,3 @@ class Post_Model extends CI_Model
 
 
 }
-
-?>

@@ -85,6 +85,71 @@ class Posts_Controller extends CI_Controller
     }
 
 
+    // Edit an existing post
+    public function editPost($post_id = NULL)
+    {
+
+        //Set validation rules for the edit post form 
+        $this->form_validation->set_rules('post_content', 'Description', 'required');
+
+        if ($this->form_validation->run() === FALSE) {
+            //If the form has not been submitted then
+            //If the user has been logged out then load the login page
+            if (!($this->session->userdata('current_user')))
+                $this->load->view('pages/login');
+
+            else {
+
+                //If the user has been logged in then load the edit post page
+                // Get data related to the post
+                $data['post'] = $this->Post_Model->getPostById($post_id);
+
+                // Load the post to be edited
+                $this->load->view('pages/edit_post', $data);
+            }
+        } else {
+            //If the form has been submitted then
+            //Set configurations for image upload
+            $config['upload_path'] = './assets/img/posts';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size'] = '10000000';
+            $config['max_width'] = '500';
+            $config['max_height'] = '500';
+
+            $this->load->library('upload', $config);
+
+            $post_image = "";
+
+            if (!$this->upload->do_upload()) {
+                $errors = array('error' => $this->upload->display_errors());
+                $post_image = "";
+            } else {
+                $data = array('upload_data' => $this->upload->data());
+                //Get the uploaded post image 
+                $post_image = $_FILES['userfile']['name'];
+            }
+
+            // Turn sections of the post that are hyperlinks (i.e., of the form “http://…..” should be turned into clickable hyperlinks).
+            $post_content = $this->handleSpecialUrls($this->input->post('post_content'));
+
+            // Update the post
+            $result = $this->Post_Model->editPost($post_id, $post_content, $post_image);
+
+            if (count($result) > 0) {
+                log_message('info', 'Post updated successfully');
+                $this->session->set_flashdata('success_message', 'Your post has been updated successfully');
+            } else {
+                log_message('error', 'Failed to update post');
+                $this->session->set_flashdata('error_message', 'Failed to update your post');
+            }
+
+            redirect('/user/home'); //Redirect to the timeline
+        }
+
+    }
+
+
+
     // Delete an existing post
     public function deletePost($post_id = NULL)
     {
